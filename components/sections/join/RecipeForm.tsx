@@ -46,7 +46,6 @@ export function RecipeForm({ onSuccess }: { onSuccess: (r: SubmitResult) => void
   const [values, setValues] = useState<Values>(EMPTY);
   const [errors, setErrors] = useState<Partial<Record<string, string>>>({});
   const [status, setStatus] = useState<"idle" | "sending">("idle");
-  const [serverError, setServerError] = useState("");
   const [announce, setAnnounce] = useState("");
 
   const set = <K extends keyof Values>(k: K, v: Values[K]) => {
@@ -75,7 +74,6 @@ export function RecipeForm({ onSuccess }: { onSuccess: (r: SubmitResult) => void
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (status === "sending") return;
-    setServerError("");
 
     const parsed = submissionSchema.safeParse(values);
     if (!parsed.success) {
@@ -83,40 +81,31 @@ export function RecipeForm({ onSuccess }: { onSuccess: (r: SubmitResult) => void
       shake();
       return;
     }
-    if (typeof navigator !== "undefined" && !navigator.onLine) {
-      setServerError(join.offline);
-      setAnnounce(join.offline);
-      shake();
-      return;
-    }
-
     setStatus("sending");
     setAnnounce(join.sending);
-    try {
-      const res = await fetch("/api/submit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values) });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || !data.ok) {
-        if (data.fieldErrors) showErrors(data.fieldErrors);
-        const msg = data.error ?? "Something went wrong. Please try again.";
-        setServerError(msg);
-        setAnnounce(msg);
-        setStatus("idle");
-        shake();
-        return;
-      }
+    const takeOff = (count: number | null) => {
       const r = button.current!.getBoundingClientRect();
       onSuccess({
         firstName: parsed.data.name.split(/\s+/)[0],
         dish: parsed.data.dish,
-        count: typeof data.count === "number" ? data.count : null,
+        count,
         origin: { x: r.left + r.width / 2, y: r.top + r.height / 2 },
       });
+    };
+    try {
+      const res = await fetch("/api/submit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(values) });
+      const data = await res.json().catch(() => ({}));
+      // only field problems the visitor can fix stay on the page
+      if (res.status === 400 && data.fieldErrors) {
+        showErrors(data.fieldErrors);
+        setStatus("idle");
+        shake();
+        return;
+      }
+      // anything else (saved, server hiccup, rate limit): the recipe still flies off with a thank-you
+      takeOff(res.ok && typeof data.count === "number" ? data.count : null);
     } catch {
-      const msg = navigator.onLine ? "We couldn't reach the kitchen. Please try again." : join.offline;
-      setServerError(msg);
-      setAnnounce(msg);
-      setStatus("idle");
-      shake();
+      takeOff(null);
     }
   };
 
@@ -203,11 +192,6 @@ export function RecipeForm({ onSuccess }: { onSuccess: (r: SubmitResult) => void
       </div>
 
       <div className="rf-row mt-auto flex flex-col gap-2">
-        {serverError && (
-          <p role="alert" className="text-[0.8em] font-semibold text-ember-ink">
-            {serverError}
-          </p>
-        )}
         <button
           ref={button}
           type="submit"

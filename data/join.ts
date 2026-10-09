@@ -37,7 +37,6 @@ export const join = {
     back: "Back to the feast",
     again: "Send another recipe",
   },
-  offline: "You seem to be offline. Your recipe is safe here; try again when you're connected.",
 };
 
 export const newsletter = {

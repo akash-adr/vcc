@@ -128,7 +128,9 @@ export function JoinFeast() {
   const onClose = useCallback(
     (again: boolean) => {
       setFlight(null);
+      // real count from the server when we have it; otherwise just tick the counter up by one
       if (result?.count != null) setCount(result.count);
+      else setCount((c) => (c === null ? c : c + 1));
       if (again) {
         setFormKey((k) => k + 1);
         setMode("form");
