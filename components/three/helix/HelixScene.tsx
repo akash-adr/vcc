@@ -202,11 +202,14 @@ export default function HelixScene({ rig, quality, onSelect, active, still }: Sc
       )}
       <Background />
       <Lights />
+      {/* separate boundaries: the tree (GLB) and the cards (photos + fonts) each appear as soon as they're ready */}
       <Suspense fallback={null}>
         <TreeColumn top={TOP} bottom={HELIX_BASE_Y} rig={rig} stepRad={STEP} lowEnd={quality.lowEnd} />
-        <Helix rig={rig} quality={quality} onSelect={onSelect} />
-        <Base y={HELIX_BASE_Y} />
       </Suspense>
+      <Suspense fallback={null}>
+        <Helix rig={rig} quality={quality} onSelect={onSelect} />
+      </Suspense>
+      <Base y={HELIX_BASE_Y} />
       <ParticleRings top={TOP + 1} bottom={HELIX_BASE_Y + 1} lowEnd={quality.lowEnd} />
       <FallingLeaves top={TOP + 3} bottom={HELIX_BASE_Y} count={quality.lowEnd ? 7 : 14} />
       {post && (

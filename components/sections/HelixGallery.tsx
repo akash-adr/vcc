@@ -67,11 +67,27 @@ export function HelixGallery() {
     [tier, size],
   );
 
-  // mount the canvas within a viewport of the section; render frames only while it's on screen
+  // Warm the 3D bundle, model, photos and fonts as soon as the browser is idle, on every visit
+  // (not only after the first-visit loader), so the tree is ready long before the section arrives.
+  useEffect(() => {
+    if (reduced) return;
+    const warm = () => {
+      import("@/components/three/helix/HelixScene").catch(() => undefined);
+      import("@/components/three/preloadModel").then((m) => m.preloadBananaTree()).catch(() => undefined);
+    };
+    if ("requestIdleCallback" in window) {
+      const id = window.requestIdleCallback(warm, { timeout: 2500 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const t = setTimeout(warm, 1500);
+    return () => clearTimeout(t);
+  }, [reduced]);
+
+  // mount the canvas two viewports ahead of the section; render frames only while it's on screen
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const near = new IntersectionObserver(([e]) => e.isIntersecting && setMounted(true), { rootMargin: "100% 0px" });
+    const near = new IntersectionObserver(([e]) => e.isIntersecting && setMounted(true), { rootMargin: "200% 0px" });
     const vis = new IntersectionObserver(([e]) => setInView(e.isIntersecting));
     near.observe(el);
     vis.observe(el);

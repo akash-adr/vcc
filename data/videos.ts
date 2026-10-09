@@ -26,8 +26,10 @@ export const channel = {
   subscribers: "31M subscribers",
   videoCount: "280+ videos",
   subscribeUrl: "https://www.youtube.com/@VillageCookingChannel?sub_confirmation=1",
-  banner: "/images/channel-banner.webp",
-  avatar: "/images/avatar-thatha.webp",
+  // channel artwork supplied by the site owner (sources in assets-src/brand/)
+  banner: "/images/channel-cover.webp",
+  avatar: "/images/channel-logo.webp",
+  avatarAlt: "Village Cooking Channel logo",
 };
 
 export const thumbnailUrl = (id: string, quality: "maxresdefault" | "hqdefault" = "maxresdefault") =>

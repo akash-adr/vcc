@@ -75,7 +75,7 @@ node scripts/build-members.mjs       # member portraits, avatar, banner
 node scripts/build-form-assets.mjs   # curry-leaf cut-out, mobile props band
 ```
 
-The banana tree GLB was converted from spec-gloss to metal-rough and compressed with gltf-transform (7.4 MB → 0.44 MB; Draco + 1024px WebP). The original is in `assets-src/banana_tree.glb`, and the Draco decoder is self-hosted in `public/draco/`.
+The banana tree GLB was converted from spec-gloss to metal-rough and compressed with gltf-transform (7.4 MB → 0.8 MB; meshopt + 1024px WebP, which needs no separate decoder download). The original is in `assets-src/banana_tree.glb`.
 
 ## Accessibility & performance notes
 

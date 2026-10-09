@@ -113,14 +113,14 @@ export function MostWatched() {
 
         {/* Channel preview, in our own design language */}
         <div data-reveal="media" className="mt-[clamp(2.5rem,5vw,4rem)] overflow-hidden rounded-[var(--radius-card)] border border-line bg-white">
-          <div className="relative h-28 overflow-hidden md:h-44">
+          <div className="relative aspect-[2138/342] overflow-hidden bg-[#f1f1f0]">
             <div data-reveal-inner className="absolute inset-0">
               <Image src={channel.banner} alt="" fill sizes="(min-width: 1440px) 1340px, 100vw" className="object-cover" />
             </div>
           </div>
           <div className="flex flex-col gap-5 p-5 md:flex-row md:items-center md:gap-6 md:p-7">
             <div className="relative -mt-14 h-24 w-24 shrink-0 overflow-hidden rounded-full border-4 border-white bg-leaf-100 shadow-leaf md:-mt-16 md:h-28 md:w-28">
-              <Image src={channel.avatar} alt="Thatha, M. Periyathambi" fill sizes="112px" className="object-cover" />
+              <Image src={channel.avatar} alt={channel.avatarAlt} fill sizes="112px" className="object-cover" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="font-display text-2xl font-extrabold tracking-tightest md:text-3xl">{channel.name}</p>

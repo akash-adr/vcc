@@ -4,7 +4,7 @@ import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, type RefObject } from "react";
 import * as THREE from "three";
-import { BANANA_TREE_URL, DRACO_PATH } from "@/lib/constants";
+import { BANANA_TREE_URL } from "@/lib/constants";
 import { seeded, sheathTexture } from "./textures";
 import type { HelixRig } from "./rig";
 
@@ -14,7 +14,7 @@ type Props = { top: number; bottom: number; rig: RefObject<HelixRig>; stepRad: n
 
 /** The GLB crown sits at the top of the helix; a twisted, sheathed pseudostem carries it down to the base. */
 export function TreeColumn({ top, bottom, rig, stepRad, lowEnd }: Props) {
-  const { scene } = useGLTF(BANANA_TREE_URL, DRACO_PATH);
+  const { scene } = useGLTF(BANANA_TREE_URL, false, true); // meshopt, no Draco
   const spin = useRef<THREE.Group>(null);
   const crownSway = useRef<THREE.Group>(null);
 
