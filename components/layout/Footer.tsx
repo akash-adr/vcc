@@ -2,7 +2,7 @@ import { TornEdge } from "@/components/ui/TornEdge";
 import { BananaLeaf } from "@/components/ui/BananaLeaf";
 import { TransitionLink } from "./PageTransition";
 import { BackToTop } from "./BackToTop";
-import { credits, footer, site } from "@/data/site";
+import { footer, site } from "@/data/site";
 
 const linkCls = "text-paper/80 transition-colors hover:text-turmeric";
 
@@ -28,7 +28,7 @@ export function Footer() {
         </div>
 
         {/* columns */}
-        <div className="grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-[1.3fr_1fr_1fr_1.3fr]">
+        <div className="grid gap-10 py-12 sm:grid-cols-2 md:grid-cols-[1.6fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
               <BananaLeaf className="h-10 w-5 rotate-[24deg] text-leaf-500" stroke="var(--leaf-900)" />
@@ -67,27 +67,10 @@ export function Footer() {
               ))}
             </ul>
           </nav>
-          <div>
-            <h2 className="eyebrow text-leaf-300">Credits</h2>
-            <ul className="mt-4 space-y-2.5 text-sm text-paper/75">
-              <li>
-                3D model:{" "}
-                <a href={credits.bananaTree.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-turmeric">
-                  {credits.bananaTree.title}
-                </a>{" "}
-                by {credits.bananaTree.author}, {credits.bananaTree.license}
-              </li>
-              <li>{footer.visualsNote}</li>
-            </ul>
-          </div>
         </div>
 
-        {/* disclaimer: required and clearly visible */}
-        <div className="flex flex-col gap-6 rounded-[22px] border border-paper/15 bg-paper/[0.04] p-6 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-2xl space-y-1.5">
-            <p className="text-sm font-semibold leading-relaxed text-paper">{site.disclaimer}</p>
-            <p className="text-sm text-paper/70">{site.builtBy}</p>
-          </div>
+        <div className="flex flex-col gap-6 border-t border-paper/10 pt-8 md:flex-row md:items-center md:justify-between">
+          <p className="text-sm font-semibold text-paper/80">{site.credit}</p>
           <BackToTop label={footer.backToTop} />
         </div>
       </div>

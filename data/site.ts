@@ -1,17 +1,12 @@
 // All site copy lives here so content edits never touch components.
 
-// TODO: fill these two in before submitting.
-const CLUB_NAME = "[CLUB NAME]";
-const MY_NAME = "[MY NAME]";
-
 export const site = {
   name: "Village Cooking Channel",
   short: "VCC",
   titleSuffix: "Village Cooking Channel, a fan tribute",
   description:
     "An unofficial fan tribute to Village Cooking Channel: six cousins, one grandfather, and a wood fire in Chinna Veeramangalam, Pudukkottai.",
-  disclaimer: `Unofficial fan tribute made for ${CLUB_NAME} recruitment. Not affiliated with or endorsed by Village Cooking Channel. All channel names belong to their owners.`,
-  builtBy: `Built by ${MY_NAME}`,
+  credit: "Designed and developed by Akash Rajarathinam",
   youtube: "https://www.youtube.com/@VillageCookingChannel",
 };
 
@@ -32,7 +27,6 @@ export const footer = {
       { label: "Facebook", href: "https://www.facebook.com/search/top?q=Village%20Cooking%20Channel" },
     ],
   },
-  visualsNote: "Visuals generated for this concept.",
   backToTop: "Back to top",
 };
 
